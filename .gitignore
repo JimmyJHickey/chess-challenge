@@ -1,0 +1,6 @@
+.vscode/
+__pycache__/
+elos.csv
+users.json
+_leaflet_cache/
+*.log
