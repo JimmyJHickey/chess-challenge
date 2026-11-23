@@ -25,7 +25,9 @@ for user in users_data:
 START_DATE = pd.Timestamp("2026-11-10")   # left edge of the plots
 END_DATE = pd.Timestamp("2026-12-31")     # right edge of the plots
 TIMEZONE = "America/New_York"             # defines where one "day" ends
-OUT_DIR = Path("../../jimmyjhickey.com/")                    # GitHub Pages can serve /docs
+# OUT_DIR = Path("../../jimmyjhickey.com/")                    # GitHub Pages can serve /docs
+OUT_DIR = Path("../jimmyjhickey.com/")                    # GitHub Pages can serve /docs
+
 PLOTS_SUB_DIR = "img/chess"
 
 # Hovering a legend entry highlights that line (Plotly has no built-in for this)
@@ -135,12 +137,19 @@ for r in standings.itertuples():
 # ---------- plots ----------
 colors = dict(zip(names, px.colors.qualitative.Plotly))
 
+# one distinct marker shape per player (cycles if you ever have more than 10)
+SYMBOLS = ["circle", "square", "diamond", "triangle-up", "cross",
+           "x", "star", "hexagon", "triangle-down", "pentagon"]
+symbols = {n: SYMBOLS[i % len(SYMBOLS)] for i, n in enumerate(names)}
+
 def make_plot(data, title, ytitle, path):
     fig = go.Figure()
     for n in names:
         fig.add_trace(go.Scatter(
             x=data.index, y=data[n], name=n, mode="lines+markers",
             line=dict(color=colors[n], width=2),
+            marker=dict(symbol=symbols[n], size=9, color=colors[n],
+                        line=dict(width=1, color="white")),
             hovertemplate="%{x|%b %d}: %{y:+d}<extra>" + n + "</extra>",
         ))
     fig.update_layout(
