@@ -22,7 +22,7 @@ for user in users_data:
 
 
 # ---------- config ----------
-START_DATE = pd.Timestamp("2026-11-23")   # left edge of the plots
+START_DATE = pd.Timestamp("2026-11-22")   # left edge of the plots
 END_DATE = pd.Timestamp("2026-12-31")     # right edge of the plots
 TIMEZONE = "America/New_York"             # defines where one "day" ends
 # OUT_DIR = Path("../../jimmyjhickey.com/")                    # GitHub Pages can serve /docs
