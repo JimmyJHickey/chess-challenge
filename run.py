@@ -7,7 +7,8 @@ import plotly.graph_objects as go
 import plotly.express as px
 from profile_scraper import ProfileScraper
 
-json_path = "users.json"
+json_path = "/home/pi/git/chess-challenge/users.json"
+csv_path = "/home/pi/git/chess-challenge/elos.csv"
 with open(json_path, 'r') as file:
     users_data = json.load(file)
 
@@ -16,7 +17,7 @@ for user in users_data:
     my_scraper = ProfileScraper(
         profile_url = user["profile_url"],
         user_name = user["user_name"], 
-        csv_path = f"elos.csv"
+        csv_path = csv_path
     )
     my_scraper.run()
 
@@ -25,9 +26,7 @@ for user in users_data:
 START_DATE = pd.Timestamp("2026-11-22")   # left edge of the plots
 END_DATE = pd.Timestamp("2026-12-31")     # right edge of the plots
 TIMEZONE = "America/New_York"             # defines where one "day" ends
-# OUT_DIR = Path("../../jimmyjhickey.com/")                    # GitHub Pages can serve /docs
-OUT_DIR = Path("../jimmyjhickey.com/")                    # GitHub Pages can serve /docs
-
+OUT_DIR = Path("/home/pi/git/jimmyjhickey.com/")
 PLOTS_SUB_DIR = "img/chess"
 
 # Hovering a legend entry highlights that line (Plotly has no built-in for this)
@@ -54,11 +53,11 @@ bindLegend();
 """
 
 # ---------- load ----------
-users = json.load(open("users.json"))
+users = json.load(open(json_path))
 names = [u["user_name"] for u in users]
 starting = pd.Series({u["user_name"]: u["starting_elo"] for u in users})
 
-df = pd.read_csv("elos.csv")
+df = pd.read_csv(csv_path)
 # map either Lichess handle or display name -> display name
 alias = {}
 for u in users:
